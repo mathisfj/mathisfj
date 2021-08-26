@@ -268,8 +268,8 @@ def gagne():
     canvas3.create_image(350,350,image=win)
     canvas3.pack(expand=YES)
 ##Clics
-def  ouverture_case_vide(x,y,X,Y):
-    canvas.create_image(X,Y,image=case_vide)
+def  ouverture_case_vide(x,y):
+    affichage(x,y,case_vide)
     lst_case_vide=[]
     n=nb_cases
     voisins=[[1,0],[0,1],[1,1],[-1,0],[0,-1],[-1,-1],[1,-1],[-1,1]]
@@ -279,26 +279,29 @@ def  ouverture_case_vide(x,y,X,Y):
             if terrain[y0,x0]==0:
                 lst_case_vide.append((x0,y0))
     for c in lst_case_vide:
-        ouverture_case_vide(c[0],c[1],20*c[0]+10,20*c[1]+10)
-        
+        ouverture_case_vide(c[0],c[1])
 
-def decouvre_case(x,y,X,Y):
+
+def decouvre_case(x,y):
     lst = [un,deux,trois,quatre,cinq,six,sept,huit]
     list=[1,2,3,4,5,6,7,8]
     if (x,y) in lst_bombe:
-        canvas.create_image(X,Y,image=bombe)
+        affichage(x,y,bombe)
         recherche_bombe(lst_bombe)
         Defaite()
     for i in range(len(list)):
         if terrain[x,y]==list[i]:
-            canvas.create_image(X,Y,image=lst[i])
+            affichage(x,y,lst[i])
     if terrain[x,y]==0:
-        ouverture_case_vide(x,y,X,Y)
-        
+        ouverture_case_vide(x,y)
+
+
+def affichage(x,y,k):
+    canvas.create_image(20*x+10,20*y+10,image=k)
     
     
-    
-        
+
+
 
 
 def click_gauche(event):
@@ -314,7 +317,7 @@ def click_gauche(event):
         y=y-(y%20)+10
     x0=x//20
     y0=y//20
-    decouvre_case(x0,y0,x,y)
+    decouvre_case(x0,y0)
 
 
 
@@ -354,3 +357,12 @@ def click_molette():
 
 ##Afficher
 fenetre.mainloop()
+
+
+
+
+
+
+
+
+
